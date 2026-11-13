@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miraculous Ladybug 🐞</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --merah: #e10600;
+      --merah-muda: #ff5f7a;
+      --putih: #f5f5f5;
+      --abu: #c0c0c0;
+      --emas: #ffd700;
+      --hitam: #0a0a0a;
+      --bubble-bg: rgba(220, 60, 90, 0.30);
+      --bubble-border: rgba(255,255,255,0.4);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-image: url('assets/background-island-2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #1a1a1a;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding: 70px 18px 90px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--putih);
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* ===== TRANSFORM SECTION ===== */
+    .transform-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin-top: 12vh;
+      animation: fadeInDown 1s ease;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .transform-section.hide {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ladybug-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(2rem, 8.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 22px rgba(217, 35, 50, 0.85);
+      line-height: 1.1;
+    }
+    .ladybug-subtitle {
+      font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+      color: var(--abu);
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      font-style: italic;
+    }
+
+    .ladybug-earring-img {
+      width: 110px;
+      max-width: 40%;
+      margin: 6px auto 4px;
+      filter: drop-shadow(0 0 25px rgba(255, 80, 120, 0.85));
+      animation: floatEarring 3s ease-in-out infinite;
+      cursor: pointer;
+    }
+    @keyframes floatEarring {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .btn-transform {
+      padding: 14px 38px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #d92332, #ff5f7a);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(217, 35, 50, 0.5);
+    }
+    .btn-transform:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(217, 35, 50, 0.85);
+    }
+    .btn-transform:active { transform: translateY(0) scale(1); }
+
+    /* ===== TRANSFORM OVERLAY ===== */
+    .transform-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.78);
+      flex-direction: column;
+      gap: 22px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .transform-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .transform-earring-img {
+      width: 170px;
+      max-width: 60%;
+      filter: drop-shadow(0 0 60px rgba(255, 95, 122, 1));
+      animation: spinGlow 1.4s ease-in-out infinite;
+    }
+    @keyframes spinGlow {
+      0% { transform: scale(0.75) rotate(0deg); opacity: 0.6; }
+      50% { transform: scale(1.15) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0.75) rotate(360deg); opacity: 0.6; }
+    }
+
+    .transform-text {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(1.4rem, 5.5vw, 1.9rem);
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      text-shadow: 0 0 20px rgba(255, 80, 120, 0.9);
+      animation: pulseText 1s ease-in-out infinite;
+      padding: 0 20px;
+    }
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+
+    /* ===== STORY SECTION ===== */
+    .letter-section {
+      display: none;
+      text-align: left;
+      margin-top: 25px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .letter-section.visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ladybug-bubble {
+      background-color: var(--bubble-bg);
+      background-image: radial-gradient(circle, rgba(0,0,0,0.35) 10px, transparent 11px);
+      background-size: 60px 60px;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: 28px;
+      padding: 32px 26px;
+      border: 1.5px solid var(--bubble-border);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      position: relative;
+    }
+
+    .bubble-decor {
+      position: absolute;
+      width: 75px;
+      max-width: 26%;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+      pointer-events: none;
+      z-index: 3;
+    }
+    .bubble-decor-left {
+      top: -22px;
+      left: -22px;
+      transform: rotate(-15deg);
+    }
+    .bubble-decor-right {
+      bottom: -22px;
+      right: -22px;
+      transform: rotate(15deg);
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .letter-tag {
+      display: inline-block;
+      padding: 5px 18px;
+      border: 1.5px solid #ff5f7a;
+      border-radius: 50px;
+      color: #ff5f7a;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255, 95, 122, 0.12);
+    }
+
+    /* ===== CLOSING LINE (di bawah tag) ===== */
+    .closing-line {
+      margin-top: 16px;
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(0.95rem, 3.6vw, 1.08rem);
+      font-weight: 600;
+      color: #ffe4ec;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      font-style: italic;
+      text-shadow: 0 0 12px rgba(255, 95, 122, 0.55);
+      padding: 0 8px;
+    }
+
+    .typewriter-text {
+      font-size: clamp(1rem, 4vw, 1.12rem);
+      line-height: 1.85;
+      color: #f0f0f0;
+      margin-bottom: 16px;
+      min-height: 1.85em;
+      font-weight: 500;
+      text-shadow: 0 0 4px rgba(0,0,0,0.5);
+      word-wrap: break-word;
+    }
+
+    /* ===== CONTINUE BUTTON ===== */
+    .finish-wrap {
+      text-align: center;
+      margin-top: 26px;
+    }
+    .btn-finish {
+      display: inline-block;
+      padding: 13px 34px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #d92332, #ff5f7a);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(217, 35, 50, 0.5);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .btn-finish.visible {
+      opacity: 1;
+      pointer-events: auto;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    .btn-finish:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(217, 35, 50, 0.85);
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      body { padding: 55px 14px 80px; }
+      .transform-section { margin-top: 8vh; gap: 14px; }
+      .ladybug-bubble { padding: 24px 16px; border-radius: 22px; }
+      .bubble-decor { width: 55px; }
+      .bubble-decor-left { top: -14px; left: -14px; }
+      .bubble-decor-right { bottom: -14px; right: -14px; }
+      .ladybug-earring-img { width: 90px; }
+      .transform-earring-img { width: 130px; }
+      .btn-transform { padding: 13px 32px; font-size: 1.05rem; }
+      .btn-finish { padding: 12px 28px; font-size: 0.95rem; }
+    }
+
+    @media (max-width: 360px) {
+      .bubble-decor { width: 45px; }
+      .bubble-decor-left { top: -10px; left: -10px; }
+      .bubble-decor-right { bottom: -10px; right: -10px; }
+      .ladybug-earring-img { width: 75px; }
+    }
+
+    /* Landscape mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .transform-section { margin-top: 3vh; gap: 10px; }
+      body { padding: 40px 16px 60px; }
+      .ladybug-earring-img { width: 70px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+
+    <!-- TRANSFORM SECTION -->
+    <div class="transform-section" id="transformSection">
+      <div class="ladybug-title">Miraculous Ladybug</div>
+      <div class="ladybug-subtitle">And somehow, I got to know your world.</div>
+      <img src="assets/earrings.png" alt="Earrings" class="ladybug-earring-img">
+      <button class="btn-transform" id="btnTransform">Transform!</button>
+    </div>
+
+    <!-- TRANSFORM OVERLAY -->
+    <div class="transform-overlay" id="transformOverlay">
+      <img src="assets/earrings.png" alt="Earrings" class="transform-earring-img">
+      <div class="transform-text" id="transformText">Tikki, spots on!</div>
+    </div>
+
+    <!-- STORY SECTION -->
+    <div class="letter-section" id="letterSection">
+      <div class="ladybug-bubble">
+        <img src="assets/island2-kiri.png" alt="" class="bubble-decor bubble-decor-left">
+        <img src="assets/island2-kanan.png" alt="" class="bubble-decor bubble-decor-right">
+
+        <div class="letter-header">
+          <div class="letter-tag">Miraculous</div>
+          <div class="closing-line" id="closingLine">
+            I guess I know your world a little better now.
+          </div>
+        </div>
+
+        <p class="typewriter-text" data-text="Selamat datang di Island 2, Cicit 😆 Aku mau lanjutin cerita sebelumnya yaa."></p>
+
+        <p class="typewriter-text" data-text="Aku suka deh saat obrolan kita mulai berkembang. Mungkin awalnya memang dari F1, tapi ternyata F1 itu cuma permulaan. Lama-lama kita mulai sering ngirim video yang bukan tentang F1, terus jadi sering banget ngobrol random HAHA."></p>
+
+        <p class="typewriter-text" data-text="Kamu juga mulai makin terbuka buat cerita hal-hal tentang kamu. Mulai suka ngejokes, ngirim video kamu mainin filter random, sampai sering banget gangguin aku cuma karena pengen liat aku marah 😭."></p>
+
+        <p class="typewriter-text" data-text="Lucu tau, kamu niat banget pengen bikin aku marah, tapi aku malah seneng karena kamu terus-terusan gangguin aku 😜."></p>
+
+        <p class="typewriter-text" data-text="Dari situ aku juga malah berubah jadi kayak wartawan yaa. Isinya selalu nanya tentang kamu, kamu, dan kamu. Maaf yaa kalau pernah bikin kamu ngerasa keganggu hehe. Soalnya aku kan...... hehe 🤭."></p>
+
+        <p class="typewriter-text" data-text="Oh iya, aku juga masih inget banget kalau kamu tuh suka banget sama kartun Disney Miraculous Ladybug. Makanya tema di pulau 2 ini aku buat sedikit mirip sama kartun itu. Kamu pasti inget pernah cerita soal itu yaaa HAHA."></p>
+
+        <p class="typewriter-text" data-text="Terus ada juga satu fase yang menurut aku paling bikin aku suka dan seneng..."></p>
+
+        <p class="typewriter-text" data-text="Fase di mana kamu mulai ngeluarin gombalan-gombalan maut 😭."></p>
+
+        <p class="typewriter-text" data-text="Kamu tau nggak wehh, waktu itu jantung aku dagdigdug kenceng banget kayak mau copot. Kamu enak aja main gombal, nggak mikirin perasaan aku yang makin lama makin... ahh sudahlah 🥰."></p>
+
+        <p class="typewriter-text" data-text="Tengs ya, Cit, udah bikin aku gakaruan 😭."></p>
+
+        <!-- Continue button -->
+        <div class="finish-wrap">
+          <button class="btn-finish" id="btnFinish">Continue →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="state.js"></script>
+  <script>
+    (function() {
+      const btnTransform = document.getElementById('btnTransform');
+      const transformSection = document.getElementById('transformSection');
+      const transformOverlay = document.getElementById('transformOverlay');
+      const transformText = document.getElementById('transformText');
+      const letterSection = document.getElementById('letterSection');
+      const btnFinish = document.getElementById('btnFinish');
+      const typewriterElements = document.querySelectorAll('.typewriter-text');
+
+      let isTransforming = false;
+
+      // ===== TRANSFORM SEQUENCE =====
+      btnTransform.addEventListener('click', function() {
+        if (isTransforming) return;
+        isTransforming = true;
+
+        transformSection.classList.add('hide');
+
+        setTimeout(() => {
+          transformOverlay.classList.add('active');
+
+          setTimeout(() => {
+            transformText.textContent = 'TRANSFORMED! 🐞';
+          }, 2200);
+
+          setTimeout(() => {
+            transformOverlay.classList.remove('active');
+
+            setTimeout(() => {
+              transformSection.style.display = 'none';
+              letterSection.style.display = 'block';
+              void letterSection.offsetWidth;
+              letterSection.classList.add('visible');
+              startTypewriter();
+            }, 250);
+          }, 3200);
+        }, 500);
+      });
+
+      // ===== TYPEWRITER =====
+      function startTypewriter() {
+        let currentIndex = 0;
+
+        function typeNext() {
+          if (currentIndex >= typewriterElements.length) {
+            // Selesai — munculkan tombol Continue
+            setTimeout(() => {
+              btnFinish.classList.add('visible');
+            }, 600);
+            return;
+          }
+
+          const element = typewriterElements[currentIndex];
+          const text = element.getAttribute('data-text');
+          element.textContent = '';
+          let charIndex = 0;
+
+          function typeChar() {
+            if (charIndex < text.length) {
+              element.textContent += text.charAt(charIndex);
+              charIndex++;
+              setTimeout(typeChar, 28);
+            } else {
+              currentIndex++;
+              setTimeout(typeNext, 460);
+            }
+          }
+
+          typeChar();
+        }
+
+        typeNext();
+      }
+
+      // ===== CONTINUE =====
+      btnFinish.addEventListener('click', function() {
+        btnFinish.disabled = true;
+        completeIslandAndReturn('island2');
+      });
+    })();
+  </script>
+</body>
+</html>
