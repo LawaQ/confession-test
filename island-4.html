@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-muda: #ffd6e8;
+      --pink-soft: #ffb6d5;
+      --pink: #ff8fb8;
+      --pink-tua: #d66b94;
+      --putih: #fff5fa;
+      --teks-gelap: #3a2b3a;
+      --teks-lembut: #6b4a5e;
+      --bubble-bg: rgba(255, 255, 255, 0.78);
+      --bubble-border: rgba(255, 143, 184, 0.55);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-image: url('assets/background-island-4.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #1a1a2e;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding: 60px 16px 80px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--teks-gelap);
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .bubble-chat {
+      border-radius: 28px;
+      padding: 28px 22px 32px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: var(--bubble-bg);
+      border: 1.5px solid var(--bubble-border);
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 22px;
+      animation: fadeInDown 1.5s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .letter-tag {
+      display: inline-block;
+      padding: 5px 16px;
+      border: 1.5px solid var(--pink);
+      border-radius: 50px;
+      color: var(--pink-tua);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(255, 143, 184, 0.15);
+    }
+
+    .accent-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 16px 0 22px;
+    }
+    .accent-line .line { height: 2px; width: 45px; background: var(--pink-soft); }
+    .accent-line .dot { width: 6px; height: 6px; background: var(--pink); border-radius: 50%; }
+
+    .gif-profile {
+      display: block;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 6px auto 26px;
+      border: 3px solid var(--pink-soft);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      background: #fff;
+    }
+
+    .typewriter-text {
+      font-size: clamp(1rem, 4vw, 1.15rem);
+      line-height: 1.85;
+      margin-bottom: 18px;
+      min-height: 1.85em;
+      font-weight: 500;
+      color: var(--teks-gelap);
+      word-wrap: break-word;
+      text-align: left;
+    }
+
+    .confession-highlight {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+      font-weight: 700;
+      color: var(--pink-tua);
+      text-align: center;
+      letter-spacing: 0.5px;
+      margin: 26px 0;
+      min-height: 1.4em;
+      line-height: 1.4;
+      text-shadow: 0 0 15px rgba(255, 143, 184, 0.35);
+    }
+
+    .closing-message {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(1.15rem, 4.5vw, 1.4rem);
+      font-weight: 700;
+      color: var(--pink-tua);
+      text-align: center;
+      letter-spacing: 0.5px;
+      margin: 28px 0 12px;
+      line-height: 1.5;
+      min-height: 1.5em;
+      text-shadow: 0 0 15px rgba(255, 143, 184, 0.3);
+    }
+
+    .signature {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--pink-tua);
+      letter-spacing: 0.8px;
+      margin-top: 30px;
+      text-align: right;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .response-area {
+      margin-top: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      text-align: center;
+    }
+    .response-area.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .response-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.98rem;
+      color: var(--teks-lembut);
+      margin-bottom: 12px;
+      font-style: italic;
+      line-height: 1.55;
+      padding: 0 4px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1.5px solid var(--pink-soft);
+      font-size: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--teks-gelap);
+      background: rgba(255,255,255,0.8);
+      resize: vertical;
+      min-height: 100px;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+      line-height: 1.6;
+    }
+    textarea::placeholder { color: #b08a9e; }
+    textarea:focus {
+      border-color: var(--pink);
+      background: rgba(255,255,255,0.95);
+    }
+
+    .btn-send {
+      margin-top: 14px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--pink), #ff6b9d);
+      color: white;
+      font-size: 0.98rem;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(255,107,157,0.4);
+    }
+    .btn-send:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(255,107,157,0.7); }
+    .btn-send:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-continue {
+      display: block;
+      margin: 16px auto 0;
+      padding: 10px 24px;
+      border: none;
+      background: transparent;
+      color: var(--teks-lembut);
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: color 0.3s;
+      text-decoration: underline;
+      text-decoration-color: rgba(107, 74, 94, 0.3);
+      text-underline-offset: 4px;
+    }
+    .btn-continue:hover {
+      color: var(--pink-tua);
+      text-decoration-color: var(--pink-soft);
+    }
+
+    .response-message {
+      margin-top: 16px;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--teks-lembut);
+      min-height: 28px;
+      line-height: 1.55;
+      animation: fadeInUp 0.5s ease;
+      padding: 0 4px;
+    }
+
+    .btn-back-map {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 28px;
+      border: none;
+      border-radius: 50px;
+      background: var(--pink);
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Chakra Petch', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .btn-back-map.visible { opacity: 1; pointer-events: auto; }
+    .btn-back-map:hover { transform: translateY(-2px); }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 50px 12px 70px; }
+      .bubble-chat { padding: 22px 16px 26px; border-radius: 22px; }
+      .gif-profile { width: 88px; height: 88px; margin-bottom: 22px; }
+      .typewriter-text { margin-bottom: 15px; }
+      .confession-highlight { margin: 22px 0; }
+      .closing-message { margin: 24px 0 10px; }
+    }
+
+    @media (max-width: 360px) {
+      .bubble-chat { padding: 18px 13px 22px; }
+      .gif-profile { width: 78px; height: 78px; }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      body { padding: 40px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    <div class="bubble-chat">
+      <div class="letter-header">
+        <div class="letter-tag">💌 One Last Thing</div>
+      </div>
+
+      <div class="accent-line">
+        <div class="line"></div>
+        <div class="dot"></div>
+        <div class="line"></div>
+      </div>
+
+      <img src="assets/blush.gif" alt="Blush" class="gif-profile">
+
+      <p class="typewriter-text" data-text="Halloo cicit😆"></p>
+      <p class="typewriter-text" data-text="Akhirnya sampai juga di bagian ini."></p>
+      <p class="typewriter-text" data-text="Jujur aku gatau harus mulai dari mana. Dan kayaknya kalau aku kebanyakan muter-muter lagi juga percuma dehh, jadi kali ini aku cuma mau jujur sama perasaan aku."></p>
+      <p class="typewriter-text" data-text="Aku mau bilang kalau..."></p>
+
+      <p class="confession-highlight" id="confessionText" data-text="AKU SUKA KAMU 🫰" data-delay="60"></p>
+
+      <p class="typewriter-text" data-text="I really, really love you. Maaf kalo lancang yaa😭"></p>
+      <p class="typewriter-text" data-text="Ternyata bener kata orang, kalo suka tuh emang datengnya tiba-tiba yaa. Awalnya aku juga nggak pernah nyangka bakal sampai di titik ini. Tapi ternyata sekarang aku bisa bilang ini ke kamu."></p>
+
+      <p class="typewriter-text" data-text="Aku juga mau bilang makasih yaa, Citt. Makasih udah mau yapping, cerita, ngasih update apapun itu ke aku. Jujur aku suka banget dengerin semuanya. Bahkan hal-hal random yang mungkin menurut kamu biasa aja, entah kenapa aku seneng aja bisa dengerinnya dari kamu."></p>
+
+      <p class="typewriter-text" data-text="Kamu tau ga sih, kalo aku suka sama seseorang tuh biasanya aku cuma diem. Nggak pernah ngomong apa-apa, nggak pernah cerita ke siapapun, dan biasanya cukup aku simpen sendiri."></p>
+      <p class="typewriter-text" data-text="Tapi kali ini kayaknya semuanya berubah dehh."></p>
+      <p class="typewriter-text" data-text="Walaupun aku masih nggak pernah cerita ke siapapun tentang ini, setidaknya sekarang aku udah berani bilang langsung ke orangnya bahwa aku suka sama dia."></p>
+
+      <p class="typewriter-text" data-text="Dan mungkin lewat semua yang aku tulis di sini, aku cuma mau ngeluarin semua hal yang selama ini ada di pikiran aku. Hal-hal yang mungkin selama ini cuma aku simpen sendiri, aku pikirin sendiri, bahkan kadang aku pertanyakan sendiri."></p>
+      <p class="typewriter-text" data-text="Aku juga pengen jujur, bukan cuma sama kamu, tapi sama diri aku sendiri."></p>
+      <p class="typewriter-text" data-text="Tentang apa yang aku rasain, tentang kenapa aku bisa sampai sejauh ini, tentang kenapa ternyata kamu bisa jadi seseorang yang buat aku kepikiran setiap waktu."></p>
+
+      <p class="typewriter-text" data-text="Aku masih belum bisa sepenuhnya mencintai atau menerima diri aku sendiri."></p>
+      <p class="typewriter-text" data-text="Tapi anehnya, di tengah semua itu, aku malah bisa lakuin hal itu ke kamu."></p>
+      <p class="typewriter-text" data-text="Dan orang yang akhirnya bikin aku berani melakukan semua itu ternyata kamu, Cit."></p>
+      <p class="typewriter-text" data-text="My ratu kucing duyung😭"></p>
+
+      <p class="typewriter-text" data-text="Di sini aku nggak bermaksud apa-apa selain pengen kamu tahu satu hal sederhana:"></p>
+
+      <p class="closing-message" id="closingMessage" data-text="Aku beneran suka sama kamu, Cit." data-delay="50"></p>
+
+      <p class="typewriter-text" data-text="Udah, itu aja yang dari tadi sebenarnya pengen aku bilang. 😭"></p>
+      <p class="typewriter-text" data-text="Aku cuma pengen kamu tahu."></p>
+
+      <div class="signature" id="signature">— Dimas</div>
+
+      <div class="response-area" id="responseArea">
+        <div class="response-label">Kalau kamu mau bilang sesuatu, tulis di sini. Nggak harus kok.</div>
+        <textarea id="heartMessage" placeholder="Kalau ada yang mau kamu sampaikan..."></textarea>
+        <button class="btn-send" id="btnSend">Kirim 💌</button>
+        <button class="btn-continue" id="btnContinue">atau lanjut aja →</button>
+        <div class="response-message" id="responseMessage"></div>
+        <a href="#" class="btn-back-map" id="btnBackMap">Kembali ke Peta</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="state.js"></script>
+  <script>
+    (function() {
+      const signature = document.getElementById('signature');
+      const responseArea = document.getElementById('responseArea');
+      const responseMessage = document.getElementById('responseMessage');
+      const heartMessage = document.getElementById('heartMessage');
+      const btnSend = document.getElementById('btnSend');
+      const btnContinue = document.getElementById('btnContinue');
+      const btnBackMap = document.getElementById('btnBackMap');
+      const typewriterElements = document.querySelectorAll('.typewriter-text');
+      const confessionEl = document.getElementById('confessionText');
+      const closingEl = document.getElementById('closingMessage');
+
+      // ===== KONFIGURASI BACKEND =====
+      // Cloudflare Worker yang nerusin ke Telegram
+      const NOTIF_BACKEND = 'https://confession-notif.ssetomass.workers.dev';
+
+      /**
+       * Kirim notifikasi ke backend (Cloudflare Worker).
+       * Worker yang akan forward ke Telegram.
+       * Token Telegram aman di server, bukan di HTML.
+       */
+      function notifyTelegram(message) {
+        console.log('[Notif] Mengirim ke backend...');
+
+        fetch(NOTIF_BACKEND, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: message })
+        })
+        .then(r => r.json())
+        .then(data => {
+          if (data.ok) {
+            console.log('[Notif] ✅ Terkirim ke Telegram');
+          } else {
+            console.warn('[Notif] ❌ Backend gagal:', data);
+          }
+        })
+        .catch(err => {
+          console.error('[Notif] ❌ Error fetch:', err);
+        });
+      }
+
+      // ===== TYPEWRITER =====
+      function typeParagraph(element, delay, onDone) {
+        const text = element.getAttribute('data-text') || '';
+        element.textContent = '';
+        let charIndex = 0;
+
+        function typeChar() {
+          if (charIndex < text.length) {
+            element.textContent += text.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeChar, delay);
+          } else {
+            if (onDone) onDone();
+          }
+        }
+        typeChar();
+      }
+
+      function runSequence() {
+        const allElements = Array.from(
+          document.querySelectorAll('.typewriter-text, .confession-highlight, .closing-message')
+        );
+
+        let index = 0;
+
+        function next() {
+          if (index >= allElements.length) {
+            signature.style.opacity = '1';
+            setTimeout(() => {
+              responseArea.classList.add('visible');
+            }, 900);
+            return;
+          }
+
+          const el = allElements[index];
+          index++;
+
+          let delay = 28;
+          if (el.classList.contains('confession-highlight')) delay = 60;
+          else if (el.classList.contains('closing-message')) delay = 50;
+          else if (el.getAttribute('data-delay')) delay = parseInt(el.getAttribute('data-delay'));
+
+          typeParagraph(el, delay, () => {
+            let gap = 380;
+            if (el.classList.contains('confession-highlight')) gap = 700;
+            else if (el.classList.contains('closing-message')) gap = 700;
+            setTimeout(next, gap);
+          });
+        }
+
+        next();
+      }
+
+      runSequence();
+
+      // ===== Kirim via Formspree + Notif Backend =====
+      btnSend.addEventListener('click', function() {
+        const message = heartMessage.value.trim();
+        if (!message) {
+          responseMessage.textContent = 'Tulis dulu kalau ada yang mau kamu sampaikan. Kalau nggak ada, tinggal lanjut aja.';
+          return;
+        }
+
+        btnSend.disabled = true;
+        btnSend.textContent = 'Mengirim...';
+
+        // Notif ke backend → diteruskan ke Telegram
+        notifyTelegram(
+          '💌 <b>Island 4 selesai!</b>\n\n' +
+          '<b>Jawaban:</b>\n' + message
+        );
+
+        // Formspree
+        const payload = {
+          message: message,
+          timestamp: new Date().toISOString()
+        };
+
+        fetch('https://formspree.io/f/xqpkyngp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(response => {
+          if (response.ok) {
+            responseMessage.textContent = 'Pesanmu sudah terkirim. Makasih ya. 💌';
+            heartMessage.style.display = 'none';
+            btnSend.style.display = 'none';
+            btnContinue.style.display = 'none';
+            btnBackMap.classList.add('visible');
+            completeIsland('island4');
+          } else {
+            throw new Error('gagal');
+          }
+        })
+        .catch(() => {
+          responseMessage.textContent = 'Gagal mengirim. Coba lagi ya.';
+          btnSend.disabled = false;
+          btnSend.textContent = 'Kirim 💌';
+        });
+      });
+
+      // ===== Continue (skip nulis) =====
+      btnContinue.addEventListener('click', function() {
+        console.log('[Notif] Continue diklik, kirim notif skip...');
+        notifyTelegram('💌 <b>Island 4 selesai!</b>\n\n(dia lanjut tanpa nulis pesan)');
+        completeIslandAndReturn('island4');
+      });
+
+      // ===== Back to Map =====
+      btnBackMap.addEventListener('click', function(e) {
+        e.preventDefault();
+        completeIslandAndReturn('island4');
+      });
+
+    })();
+  </script>
+</body>
+</html>
